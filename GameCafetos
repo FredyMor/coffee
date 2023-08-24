@@ -1,0 +1,40 @@
+import Phaser from 'phaser';
+
+// Configuración del set
+const config = {
+  type: Phaser.AUTO,
+  width: 5000,
+  height: 5000,
+  scene: {
+    preload: preload,
+    create: create
+  }
+};
+
+const game = new Phaser.Game(config);
+
+function preload() {
+
+  this.load.image('arid', 'ruta/a/imagen/terreno_arido.png');
+  this.load.image('grass', 'ruta/a/imagen/pasto_verde.png');
+}
+
+function create() {
+
+  this.add.image(0, 0, 'arid').setOrigin(0);
+
+  const gridSize = 50; // Tamaño de la parcela en píxeles
+  const numCols = 100; // Número de columnas en la cuadrícula
+  const numRows = 100; // Número de filas en la cuadrícula
+
+  for (let col = 0; col < numCols; col++) {
+    for (let row = 0; row < numRows; row++) {
+      const x = col * gridSize;
+      const y = row * gridSize;
+      
+      this.add.image(x, y, 'grass').setOrigin(0).setDisplaySize(gridSize, gridSize);
+      
+      this.add.text(x + 5, y + 5, `${col},${row}`, { fontSize: '10px', color: '#ffffff' });
+    }
+  }
+}
